@@ -1,0 +1,54 @@
+version: '3.7'
+services:
+  api:
+    build: .
+    image: final-api
+    restart: always
+    networks:
+      - simple-net
+    ports:
+      - 8000:8000
+    volumes:
+      - submission-data:/usr/src/app/api/uploads
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+    depends_on:
+      - redis
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    networks:
+      - simple-net
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db-init/:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: "redis-server"
+    networks:
+      - simple-net
+    restart: always
+    ports:
+      - 6379:6379
+
+
+volumes:
+  mysql-data:
+    name: final-mysql-data
+  submission-data:
+    name: final-submission-data
+networks:
+  simple-net:

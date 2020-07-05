@@ -1,4 +1,9 @@
-
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: The Tarpaulin API
+  description: API for an "alternative" to Canvas.
+  
 paths:
   /users:
     post:
@@ -44,7 +49,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+      
   /users/login:
     post:
       summary: Log in a User.
@@ -83,14 +88,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error' 
         '401':
           description: >
             The specified credentials were invalid.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error' 
         '500':
           description: >
             An internal server error occurred.
@@ -98,7 +103,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
   /users/{id}:
     parameters:
       - name: id
@@ -111,7 +116,7 @@ paths:
             - type: string
         example: "123"
         required: true
-
+        
     get:
       summary: Fetch data about a specific User.
       description: >
@@ -190,7 +195,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Course'
-
+                
     post:
       summary: Create a new course.
       description: >
@@ -234,7 +239,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
   /courses/{id}:
     parameters:
       - name: id
@@ -247,7 +252,7 @@ paths:
             - type: string
         example: "123"
         required: true
-
+        
     get:
       summary: Fetch data about a specific Course.
       description: >
@@ -268,7 +273,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
     patch:
       summary: Update data for a specific Course.
       description: >
@@ -307,7 +312,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
     delete:
       summary: Remove a specific Course from the database.
       description: >
@@ -331,7 +336,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
   /courses/{id}/students:
     parameters:
       - name: id
@@ -380,7 +385,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
     post:
       summary: Update enrollment for a Course.
       description: >
@@ -436,7 +441,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
   /courses/{id}/roster:
     parameters:
       - name: id
@@ -728,7 +733,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+                
     post:
       summary: Create a new Submission for an Assignment.
       description: >
@@ -806,7 +811,7 @@ components:
           description: >
             Permission role of the User.  Can be either 'admin', 'instructor', or 'student'.
           default: student
-
+          
     Course:
       description: >
         An object representing information about a specific course.
@@ -835,7 +840,7 @@ components:
           description: >
             ID for Course instructor.  Exact type/format will depend on your implementation but will likely be either an integer or a string.  This ID must correspond to a User with the 'instructor' role.
           example: "123"
-
+          
     Assignment:
       description: >
         An object representing information about a single assignment.
@@ -892,6 +897,7 @@ components:
           type: string
           description: >
             When the Submission is being created, this will be the binary data contained in the submitted file.  When Submission information is being returned from the API, this will contain the URL from which the file can be downloaded.
+
     Error:
       description: >
         An object representing an error response from the API.
@@ -911,3 +917,4 @@ tags:
   - name: Assignments
     description: >
       API endpoints related to Assignments.
+  
